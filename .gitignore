@@ -1,0 +1,52 @@
+# ---- data & artifacts (NEVER commit: these are TB-scale) ----------------------
+# outputs/ is ~53 TB of run outputs
+outputs/
+# text_data/ is ~331 GB tokenized LM1B cache
+text_data/
+# model-ckpts/ is ~473 GB -> published to Hugging Face instead
+model-ckpts/
+# lm1b/ is ~3.5 GB raw dataset
+lm1b/
+# synthetic_data_large/ is ~6.9 GB generated data
+synthetic_data_large/
+# watch_folder/ is ~756 MB slurm logs & samples
+watch_folder/
+# integral/ holds cached tokenizer pickles
+integral/
+
+# ---- prebuilt wheels (183 MB / 245 MB) ---------------------------------------
+*.whl
+
+# ---- checkpoints / weights ---------------------------------------------------
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.bin
+*.h5
+*.pkl
+
+# ---- python ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# ---- notebooks ---------------------------------------------------------------
+.ipynb_checkpoints/
+
+# ---- logging / experiment tracking -------------------------------------------
+wandb/
+lightning_logs/
+*.out
+*.err
+*.log
+slurm-*.out
+
+# ---- locks & scratch ---------------------------------------------------------
+*.lock
+.DS_Store
