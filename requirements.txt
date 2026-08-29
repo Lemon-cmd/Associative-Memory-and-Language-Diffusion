@@ -3,14 +3,12 @@
 #   conda create -n duo python=3.12
 #   conda activate duo
 #   pip install -r requirements.txt
-#   pip install flash_attn-2.7.3+cu12torch2.6cxx11abiTRUE-cp312-cp312-linux_x86_64.whl
+#   pip install flash-attn==2.7.3 --no-build-isolation
 #
-# flash-attn is installed LAST, from the prebuilt local wheel, because building it
-# from source requires torch to already be present and takes ~1h.
+# flash-attn is installed LAST because it needs torch already present. Building from
+# source takes ~1h; a prebuilt wheel matching your torch/CUDA/Python is much faster:
+#   https://github.com/Dao-AILab/flash-attention/releases
 #
-# For an exact byte-for-byte reproduction of the environment (all transitive deps),
-# use requirements-lock.txt instead.
-
 # --- PyTorch (CUDA 12.6 build) -----------------------------------------------
 --extra-index-url https://download.pytorch.org/whl/cu126
 torch==2.6.0+cu126
@@ -21,6 +19,7 @@ triton==3.2.0
 # --- training framework -------------------------------------------------------
 lightning==2.6.0
 torchmetrics==1.6.1
+# optional: only used as an attention fallback if flash-attn is unavailable
 xformers==0.0.29.post3
 
 # --- config -------------------------------------------------------------------
