@@ -6,30 +6,35 @@ Official code for the paper:
 > Bao Pham, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
 > arXiv:2604.26841 · [paper](https://arxiv.org/abs/2604.26841) · [checkpoints](https://huggingface.co/lemoncmd/lldms-associative-memory)
 
-## Abstract
+![Corrupt-token recovery across model sizes and training-set fractions](pngs/tweet_fig_1.png)
 
-When do language diffusion models memorize their training data, and how to quantitatively assess
-their true generative regime? We address these questions by showing that Uniform-based Discrete
-Diffusion Models (UDDMs) fundamentally behave as Associative Memories (AMs) with emergent creative
-capabilities. The core idea of an AM is to reliably recover stored data points as memories by
-establishing distinct basins of attraction around them. Historically, models like Hopfield networks
-use an explicit energy function to guarantee these stable attractors. We broaden this perspective by
-leveraging the observation that energy is not strictly necessary, as basins of attraction can also
-be formed via conditional likelihood maximization. By evaluating token recovery of training and test
-examples, we identify in UDDMs a sharp memorization-to-generalization transition governed by the
-size of the training dataset: as it increases, basins around training examples shrink and basins
-around unseen test examples expand, until both later converge to the same level. Crucially, we can
-detect this transition using only the conditional entropy of predicted token sequences: memorization
-is characterized by vanishing conditional entropy, while in the generalization regime the
-conditional entropy of most tokens remains finite. Thus, conditional entropy offers a practical
-probe for the memorization-to-generalization transition in deployed models.
+*Corrupt a sequence, let the model denoise it, and count how many original tokens come back.
+**Top:** the same perturbed test example recovered by a model trained on a small dataset (blue,
+unrecovered) versus a large one (red, recovered). **Bottom:** corrupt-token recovery against the
+fraction of LM1B used for training, for each model size. Solid lines are training examples, dashed
+lines are held-out test examples, colours are corruption levels `t`. Training curves fall and test
+curves rise until they meet — the memorization-to-generalization transition.*
+
+## Overview
+
+A uniform-state discrete diffusion language model (UDDM) behaves like an **associative memory**:
+corrupt a sequence, run the model, and tokens inside a basin of attraction snap back to their
+original values. This repo trains UDDMs on nested subsets of LM1B and uses that recovery test to
+find where memorization ends and generalization begins.
+
+The result is a sharp transition governed by **how much data the model saw**. On small training
+sets, training examples are recovered perfectly while test examples are not — the model has stored
+its training data. As the training set grows, basins around training examples shrink and basins
+around unseen test examples expand, until the two converge and held-out text is as stable as
+training text. The same transition is detectable from the **conditional entropy** of predicted
+tokens alone, which needs no access to the training set and so works on deployed models.
 
 ## What's in this repo
 
 The central experiment is a **model size × training-set size** sweep. Three UDDMs are each trained
 on 54 nested subsets of [LM1B](https://huggingface.co/datasets/lm1b) — from 0.01% of the corpus up
 to 100% — every one for exactly 1,000,000 steps. Holding architecture and step count fixed while
-sweeping the dataset size is what exposes the memorization-to-generalization transition.
+sweeping only the dataset size is what isolates the transition above to a single variable.
 
 | Size | Backbone | `hidden_size` | `n_blocks` | `n_heads` | Params |
 |---|---|---|---|---|---|
@@ -75,7 +80,11 @@ pip install -r requirements.txt
 pip install flash_attn-2.7.3+cu12torch2.6cxx11abiTRUE-cp312-cp312-linux_x86_64.whl
 ```
 
-`requirements-lock.txt` pins every transitive dependency for exact reproduction.
+`requirements.txt` pins the ~40 packages this project imports directly. `requirements-lock.txt` is
+a full lockfile — every one of the 190 packages in the working environment, including transitive
+dependencies, at the exact version it was trained with. Use `requirements.txt` normally; reach for
+the lockfile when a fresh install resolves a different version and you need to reproduce results
+byte-for-byte.
 
 ## Usage
 
