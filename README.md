@@ -5,7 +5,7 @@ Official code for the paper:
 > **Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data**
 > Bao Pham, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
 > **Accepted to EMNLP 2026 (Main Conference).**
-> arXiv:2604.26841 · [paper](https://arxiv.org/abs/2604.26841) · [checkpoints](https://huggingface.co/lemoncmd/lldms-associative-memory)
+> arXiv:2604.26841 · [paper](https://arxiv.org/abs/2604.26841) · [checkpoints](https://huggingface.co/lemoncmd/lldms-associative-memory) · [samples](https://huggingface.co/datasets/lemoncmd/lldms-associative-memory-samples)
 
 ![Corrupt-token recovery across model sizes and training-set fractions](pngs/tweet_fig_1.png)
 
@@ -78,6 +78,32 @@ path = hf_hub_download(
 
 They are organized `<size>/lm1b-<size>-<subset>.ckpt`, where `<subset>` is the fraction of LM1B the
 model was trained on — the x-axis of the transition.
+
+## Generated samples
+
+The text these checkpoints produced is released as a companion dataset — **29.5M sequences
+(~3.8B tokens, 7.3 GB)**, one generation run per (model size, subset):
+
+**https://huggingface.co/datasets/lemoncmd/lldms-associative-memory-samples**
+
+```python
+from huggingface_hub import snapshot_download
+
+# samples from the medium model trained on 25% of LM1B
+path = snapshot_download(
+    repo_id="lemoncmd/lldms-associative-memory-samples",
+    repo_type="dataset",
+    allow_patterns="medium/0.25/**",
+)
+```
+
+Each run keeps its `.hydra/` config and generation log alongside the parquet shards, so every
+sample set traces back to the command that produced it. Sequences are `bert-base-uncased` token
+ids of length 128, sentence-packed — id `101` (`[CLS]`) acts as a separator mid-sequence, not just
+at the start. Regenerate them yourself with `generate_multi.py` / `aimos_scripts/generate_multi.sh`.
+
+Coverage is a subset of the trained sweep: 53 of 54 subsets for `small`, 38 for `tiny`, 39 for
+`medium`.
 
 ## Setup
 
