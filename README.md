@@ -29,6 +29,16 @@ around unseen test examples expand, until the two converge and held-out text is 
 training text. The same transition is detectable from the **conditional entropy** of predicted
 tokens alone, which needs no access to the training set and so works on deployed models.
 
+![Validation perplexity peaks at the memorization-to-generalization transition](pngs/perplexity_combined.png)
+
+*The transition also leaves a signature in perplexity. **Top:** validation perplexity against the
+fraction of LM1B used for training, for each model size; the horizontal line is the large-data
+asymptote. **Bottom:** the corrupt-token recovery curves from above, sharing the same x-axis. The
+grey dashed line marks the same training-set fraction in both rows — perplexity peaks exactly where
+the train and test recovery curves begin to converge. Larger models reach that point later
+(≈10⁻³ of the corpus for `tiny`, ≈10⁻² for `medium`), i.e. they need more data before they stop
+memorizing.*
+
 ## What's in this repo
 
 The central experiment is a **model size × training-set size** sweep. Three UDDMs are each trained
