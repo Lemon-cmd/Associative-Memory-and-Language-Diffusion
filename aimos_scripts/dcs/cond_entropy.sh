@@ -20,7 +20,7 @@ num_samples=20000
 data=lm1b-wrap
 override=false
 eval_mode=train
-work_dir=/gpfs/u/home/HPDM/HPDMphmb/scratch/diffusion-duality
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 
 echo "Using batch size: ${batch_size}"
 echo "Evaluating times: ${TIMES_STR}"

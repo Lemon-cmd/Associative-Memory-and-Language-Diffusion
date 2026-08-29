@@ -11,7 +11,7 @@ size=small
 batch_size=128
 num_samples=5000
 data=lm1b-wrap
-work_dir=/gpfs/u/home/HPDM/HPDMphmb/scratch/diffusion-duality
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 
 eval_mode=train
 eval_time=1.0

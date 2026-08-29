@@ -2,7 +2,7 @@
 train: text8
 valid: text8
 tokenizer_name_or_path: text8
-cache_dir: /gpfs/u/home/HPDM/HPDMphmb/scratch/diffusion-duality/text_data/
+cache_dir: ${oc.env:DATA_CACHE_DIR,${hydra:runtime.cwd}/text_data}
 wrap: True
 streaming: False
 insert_train_eos: True

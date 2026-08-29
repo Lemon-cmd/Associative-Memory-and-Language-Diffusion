@@ -18,7 +18,7 @@ batch_size=128
 num_samples=5000
 data=lm1b-wrap
 
-work_dir=/gpfs/u/home/HPDM/HPDMphmb/scratch/diffusion-duality
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 ckpt_dir="${work_dir}/model-ckpts" 
 
 eval_mode=test

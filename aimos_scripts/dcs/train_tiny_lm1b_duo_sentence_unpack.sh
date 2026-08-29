@@ -25,7 +25,8 @@
 
 size=tiny
 subset=0.0001
-cache_dir=/gpfs/u/home/HPDM/HPDMphmb/scratch/diffusion-duality/text_data/
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+cache_dir="${work_dir}/text_data/"
 
 export WANDB_MODE=offline
 

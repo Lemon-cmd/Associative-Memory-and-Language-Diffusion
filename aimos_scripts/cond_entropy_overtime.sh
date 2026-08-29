@@ -13,7 +13,7 @@ batch_size=384
 
 num_samples=5000
 data=lm1b-wrap
-work_dir=/mnt/home/phamd/diffusion-duality/
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 
 eval_mode=train
 eval_time=1.0

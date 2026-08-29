@@ -19,7 +19,7 @@ batch_size=384
 
 data=lm1b-wrap
 size_per_file=2500
-work_dir=/mnt/home/phamd/diffusion-duality/
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 ckpt_dir="${work_dir}/model-ckpts" 
 out_dir=synthetic_data_large
 
