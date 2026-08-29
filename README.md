@@ -4,6 +4,7 @@ Official code for the paper:
 
 > **Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data**
 > Bao Pham, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
+> **Accepted to EMNLP 2026 (Main Conference).**
 > arXiv:2604.26841 · [paper](https://arxiv.org/abs/2604.26841) · [checkpoints](https://huggingface.co/lemoncmd/lldms-associative-memory)
 
 ![Corrupt-token recovery across model sizes and training-set fractions](pngs/tweet_fig_1.png)
@@ -29,16 +30,6 @@ around unseen test examples expand, until the two converge and held-out text is 
 training text. The same transition is detectable from the **conditional entropy** of predicted
 tokens alone, which needs no access to the training set and so works on deployed models.
 
-![Validation perplexity peaks at the memorization-to-generalization transition](pngs/perplexity_combined.png)
-
-*The transition also leaves a signature in perplexity. **Top:** validation perplexity against the
-fraction of LM1B used for training, for each model size; the horizontal line is the large-data
-asymptote. **Bottom:** the corrupt-token recovery curves from above, sharing the same x-axis. The
-grey dashed line marks the same training-set fraction in both rows — perplexity peaks exactly where
-the train and test recovery curves begin to converge. Larger models reach that point later
-(≈10⁻³ of the corpus for `tiny`, ≈10⁻² for `medium`), i.e. they need more data before they stop
-memorizing.*
-
 ## What's in this repo
 
 The central experiment is a **model size × training-set size** sweep. Three UDDMs are each trained
@@ -58,6 +49,16 @@ The two measurements in the paper map onto two families of scripts:
 |---|---|
 | Token recovery / basins of attraction around train and test examples | `eval_fixed_point.py`, `eval_fixed_point_multi.py` |
 | Conditional entropy as a probe for the transition | `eval_entropy.py`, `eval_entropy_multi.py`, `eval_entropy_overtime.py` |
+
+![Validation perplexity peaks at the memorization-to-generalization transition](pngs/perplexity_combined.png)
+
+*The transition also leaves a signature in perplexity. **Top:** validation perplexity against the
+fraction of LM1B used for training, for each model size; the horizontal line is the large-data
+asymptote. **Bottom:** the corrupt-token recovery curves from above, sharing the same x-axis. The
+grey dashed line marks the same training-set fraction in both rows — perplexity peaks exactly where
+the train and test recovery curves begin to converge. Larger models reach that point later
+(≈10⁻³ of the corpus for `tiny`, ≈10⁻² for `medium`), i.e. they need more data before they stop
+memorizing.*
 
 ## Checkpoints
 
