@@ -76,15 +76,20 @@ Requires Python 3.12 and CUDA 12.6.
 conda create -n duo python=3.12
 conda activate duo
 pip install -r requirements.txt
-# flash-attn last, from the prebuilt wheel (building from source takes ~1h)
+
+# flash-attn is installed last, because it needs torch already present.
+# Prefer a prebuilt wheel matching your torch/CUDA/Python from
+# https://github.com/Dao-AILab/flash-attention/releases
+# (this project used 2.7.3 for cu12 / torch 2.6 / cxx11abiTRUE / cp312):
 pip install flash_attn-2.7.3+cu12torch2.6cxx11abiTRUE-cp312-cp312-linux_x86_64.whl
+
+# ...or build from source, which takes roughly an hour:
+pip install flash-attn==2.7.3 --no-build-isolation
 ```
 
-`requirements.txt` pins the ~40 packages this project imports directly. `requirements-lock.txt` is
-a full lockfile — every one of the 190 packages in the working environment, including transitive
-dependencies, at the exact version it was trained with. Use `requirements.txt` normally; reach for
-the lockfile when a fresh install resolves a different version and you need to reproduce results
-byte-for-byte.
+Versions are pinned to the environment the released checkpoints were trained in. flash-attn is
+required for the fused attention path; without it `models/dit.py` falls back to xFormers, then to
+plain PyTorch attention.
 
 ## Usage
 
