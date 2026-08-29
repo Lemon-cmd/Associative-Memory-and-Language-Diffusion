@@ -11,7 +11,7 @@ num_gpus=6
 size=small
 num_samples=20000
 data=lm1b-wrap
-work_dir=/gpfs/u/home/HPDM/HPDMphmb/scratch/diffusion-duality
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 
 # --- Dynamic Batch Size Logic ---
 if [[ "$size" == "small" || "$size" == "tiny" ]]; then

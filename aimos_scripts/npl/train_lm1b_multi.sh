@@ -10,7 +10,8 @@ size=tiny
 num_gpus=4
 num_nodes=1
 
-cache_dir=/gpfs/u/home/HPDM/HPDMphmb/scratch/diffusion-duality/text_data/
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+cache_dir="${work_dir}/text_data/"
 
 for subset in "${SUBSET_SIZES[@]}"; do
     # Define the checkpoint path variable

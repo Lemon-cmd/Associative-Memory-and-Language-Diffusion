@@ -28,12 +28,10 @@ gpu_type="nvidia_h100_80gb_hbm3" # or nvidia_h200
 
 time_limit="36:00:00"
 
-cache_dir=/mnt/home/phamd/diffusion-duality/text_data/
+work_dir="${WORK_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+cache_dir="${work_dir}/text_data/"
 
 for subset in "${SUBSET_SIZES[@]}"; do
-    # Define the checkpoint path variable
-    ckpt_path="${ckpt_dir}/lm1b-${size}/lm1b-${size}-${subset}.ckpt"
-
     sbatch <<EOT
 #!/bin/bash
 #SBATCH -J lm1b-${size}-${subset}              # Job name
