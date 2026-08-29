@@ -33,7 +33,7 @@ tokens alone, which needs no access to the training set and so works on deployed
 ## What's in this repo
 
 The central experiment is a **model size × training-set size** sweep. Three UDDMs are each trained
-on 54 nested subsets of [LM1B](https://huggingface.co/datasets/lm1b) — from 0.01% of the corpus up
+on 54 nested subsets of [LM1B](https://huggingface.co/datasets/billion-word-benchmark/lm1b) — from 0.01% of the corpus up
 to 100% — every one for exactly 1,000,000 steps. Holding architecture and step count fixed while
 sweeping only the dataset size is what isolates the transition above to a single variable.
 
