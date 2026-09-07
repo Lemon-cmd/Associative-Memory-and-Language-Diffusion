@@ -147,14 +147,11 @@ nbs/                    analysis notebooks and paper figures
 ## Citation
 
 ```bibtex
-@misc{pham2026languagediffusionmodelsassociative,
-      title={Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data},
-      author={Bao Pham and Mohammed J. Zaki and Luca Ambrogioni and Dmitry Krotov and Matteo Negri},
-      year={2026},
-      eprint={2604.26841},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2604.26841},
+@article{pham2026language,
+  title={Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data},
+  author={Pham, Bao and Zaki, Mohammed J and Ambrogioni, Luca and Krotov, Dmitry and Negri, Matteo},
+  journal={arXiv preprint arXiv:2604.26841},
+  year={2026}
 }
 ```
 ![Validation perplexity peaks at the memorization-to-generalization transition](pngs/perplexity_combined.png)
