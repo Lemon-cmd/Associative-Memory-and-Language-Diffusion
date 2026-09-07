@@ -9,28 +9,13 @@ Official code for the paper:
 
 ![Corrupt-token recovery across model sizes and training-set fractions](pngs/tweet_fig_1.png)
 
-*Corrupt a sequence, let the model denoise it, and count how many original tokens come back.
 **Top:** the same perturbed test example recovered by a model trained on a small dataset (blue,
 unrecovered) versus a large one (red, recovered). **Bottom:** corrupt-token recovery against the
 fraction of LM1B used for training, for each model size. Solid lines are training examples, dashed
-lines are held-out test examples, colours are corruption levels `t`. Training curves fall and test
-curves rise until they meet — the memorization-to-generalization transition.*
+lines are held-out test examples, colours are corruption levels `t`. Token recovery rate on ***training samples*** falls while the recovery rate on ***test samples***
+rises until they converge, highlighting the memorization-to-generalization transition.
 
 ## Overview
-
-A uniform-state discrete diffusion language model (UDDM) behaves like an **associative memory**:
-corrupt a sequence, run the model, and tokens inside a basin of attraction snap back to their
-original values. This repo trains UDDMs on nested subsets of LM1B and uses that recovery test to
-find where memorization ends and generalization begins.
-
-The result is a sharp transition governed by **how much data the model saw**. On small training
-sets, training examples are recovered perfectly while test examples are not — the model has stored
-its training data. As the training set grows, basins around training examples shrink and basins
-around unseen test examples expand, until the two converge and held-out text is as stable as
-training text. The same transition is detectable from the **conditional entropy** of predicted
-tokens alone, which needs no access to the training set and so works on deployed models.
-
-## What's in this repo
 
 The central experiment is a **model size × training-set size** sweep. Three UDDMs are each trained
 on 54 nested subsets of [LM1B](https://huggingface.co/datasets/billion-word-benchmark/lm1b) — from 0.01% of the corpus up
@@ -49,16 +34,6 @@ The two measurements in the paper map onto two families of scripts:
 |---|---|
 | Token recovery / basins of attraction around train and test examples | `eval_fixed_point.py`, `eval_fixed_point_multi.py` |
 | Conditional entropy as a probe for the transition | `eval_entropy.py`, `eval_entropy_multi.py`, `eval_entropy_overtime.py` |
-
-![Validation perplexity peaks at the memorization-to-generalization transition](pngs/perplexity_combined.png)
-
-*The transition also leaves a signature in perplexity. **Top:** validation perplexity against the
-fraction of LM1B used for training, for each model size; the horizontal line is the large-data
-asymptote. **Bottom:** the corrupt-token recovery curves from above, sharing the same x-axis. The
-grey dashed line marks the same training-set fraction in both rows — perplexity peaks exactly where
-the train and test recovery curves begin to converge. Larger models reach that point later
-(≈10⁻³ of the corpus for `tiny`, ≈10⁻² for `medium`), i.e. they need more data before they stop
-memorizing.*
 
 ## Checkpoints
 
@@ -182,3 +157,13 @@ nbs/                    analysis notebooks and paper figures
       url={https://arxiv.org/abs/2604.26841},
 }
 ```
+![Validation perplexity peaks at the memorization-to-generalization transition](pngs/perplexity_combined.png)
+
+*The transition also leaves a signature in perplexity. **Top:** validation perplexity against the
+fraction of LM1B used for training, for each model size; the horizontal line is the large-data
+asymptote. **Bottom:** the corrupt-token recovery curves from above, sharing the same x-axis. The
+grey dashed line marks the same training-set fraction in both rows — perplexity peaks exactly where
+the train and test recovery curves begin to converge. Larger models reach that point later
+(≈10⁻³ of the corpus for `tiny`, ≈10⁻² for `medium`), i.e. they need more data before they stop
+memorizing.*
+
