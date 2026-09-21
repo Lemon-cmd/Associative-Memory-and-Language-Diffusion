@@ -1,11 +1,16 @@
-# Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data
+<div align="center">
 
-Official code for the paper:
+# Language Diffusion Models are Associative Memories<br>Capable of Retrieving Unseen Data
 
-> **Language Diffusion Models are Associative Memories Capable of Retrieving Unseen Data**
-> Bao Pham, Mohammed J. Zaki, Luca Ambrogioni, Dmitry Krotov, Matteo Negri
-> **Accepted to EMNLP 2026 (Main Conference).**
-> arXiv:2604.26841 · [paper](https://arxiv.org/abs/2604.26841) · [checkpoints](https://huggingface.co/lemoncmd/lldms-associative-memory) · [samples](https://huggingface.co/datasets/lemoncmd/lldms-associative-memory-samples)
+[![Paper](https://img.shields.io/badge/arXiv-2604.26841-b31b1b.svg)](https://arxiv.org/abs/2604.26841)
+![Venue](https://img.shields.io/badge/EMNLP%202026-Main%20Conference-blueviolet.svg)
+[![Checkpoints](https://img.shields.io/badge/%F0%9F%A4%97%20Checkpoints-lldms--associative--memory-yellow.svg)](https://huggingface.co/lemoncmd/lldms-associative-memory)
+[![Samples](https://img.shields.io/badge/%F0%9F%A4%97%20Samples-lldms--associative--memory--samples-yellow.svg)](https://huggingface.co/datasets/lemoncmd/lldms-associative-memory-samples)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+
+Bao Pham · Mohammed J. Zaki · Luca Ambrogioni · Dmitry Krotov · Matteo Negri
+
+</div>
 
 ![Corrupt-token recovery across model sizes and training-set fractions](pngs/tweet_fig_1.png)
 
